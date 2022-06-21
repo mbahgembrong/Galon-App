@@ -3,7 +3,33 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Galon App/app/src/main/res/drawable-v24/bg_rounded_stroke.xml" value="0.1" />
+        <entry key="..\:/Galon App/app/src/main/res/drawable-v24/ic_minus.xml" value="0.1" />
+        <entry key="..\:/Galon App/app/src/main/res/drawable/bg_rounded.xml" value="0.18611111111111112" />
+        <entry key="..\:/Galon App/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/activity_kurir.xml" value="0.25" />
         <entry key="..\:/Galon App/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/activity_maps.xml" value="0.17" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/activity_order_detail.xml" value="0.4666666666666667" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/activity_pelanggan.xml" value="0.27425373134328357" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/activity_transaksi.xml" value="0.33" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/content_scrolling.xml" value="0.18" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/fragment_home.xml" value="0.2213256484149856" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/fragment_maps.xml" value="0.13" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/fragment_order.xml" value="0.18" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/fragment_profile.xml" value="0.16" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/grid_galon.xml" value="0.6422535211267606" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/home_fragment.xml" value="0.1" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/in_dec_view.xml" value="0.33" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/kurir_activity.xml" value="0.1" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/list_galon_order.xml" value="0.33" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/list_galon_order_detail.xml" value="0.3014354066985646" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/list_galon_transaksi.xml" value="0.67" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/list_order_kurir.xml" value="0.11413043478260869" />
+        <entry key="..\:/Galon App/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
+        <entry key="..\:/Galon App/app/src/main/res/menu/menu_transaksi.xml" value="0.33" />
       </map>
     </option>
   </component>

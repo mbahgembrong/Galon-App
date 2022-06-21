@@ -1,0 +1,33 @@
+package com.example.galonapps.config
+
+object  Constant {
+    //SHARED PREFERENCE NAMES
+    const val LOGIN_PREFS = "login_prefs"
+    const val CUSTOMER_PREFS = "customer_prefs"
+    const val CART_PREFERENCES = "cart_prefs"
+    const val AUTH_TOKEN = "auth_token"
+    const val USER_ID = "user_id"
+    const val FCM_TOKEN = "fcm_token"
+    const val SHOP = "shop"
+    const val ITEM_ID = "item_id"
+    const val SHOP_ID = "shop_id"
+    const val SHOP_NAME = "shop_name"
+    const val GLOBAL_SEARCH = "global_search"
+    const val CUSTOMER_NAME = "name"
+    const val CUSTOMER_EMAIL = "email"
+    const val CUSTOMER_PLACE = "place"
+    const val SHOP_LIST = "shop_list"
+    const val CUSTOMER_MOBILE = "mobile"
+    const val CUSTOMER_ROLE = "role"
+    const val CART = "cart"
+    const val CART_SHOP = "cart_shop"
+    const val CART_DELIVERY = "cart_delivery"
+    const val CART_SHOP_INFO = "cart_shop_info"
+    const val CART_DELIVERY_LOCATION = "cart_delivery_location"
+    const val ORDER_DETAIL = "order_detail"
+    const val ORDER_ID = "order_id"
+    const val TRANSACTION_TOKEN = "transaction_token"
+    const val URL = "URL"
+    const val TEMP_MOBILE = "temp_mobile"
+    const val TEMP_OAUTHID = "temp_oauthid"
+}

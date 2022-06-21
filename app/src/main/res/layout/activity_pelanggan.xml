@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground"
+            app:menu="@menu/bottom_nav_menu" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
+
+    <fragment
+            android:id="@+id/nav_host_fragment_activity_pelanggan"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:navGraph="@navigation/mobile_navigation"
+            app:layout_constraintBottom_toTopOf="@+id/nav_view" app:layout_constraintTop_toTopOf="parent"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintBottom_toTopOf="@+id/nav_view"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="16dp" android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+            android:gravity="center_vertical" android:background="@drawable/bg_rounded"
+            android:id="@+id/buttonCartPelanggan"
+            android:paddingHorizontal="16dp">
+        <TextView
+                android:text="3 items"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/textItemCart"/>
+        <TextView
+                android:text="48.600"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textGrandTotalHarga" android:layout_weight="1"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="end"/>
+        <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp" app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24"
+                android:id="@+id/imageView3"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

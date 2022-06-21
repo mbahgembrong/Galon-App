@@ -11,5 +11,6 @@ data class Galon(
     @SerializedName("isi_galon") var isiGalon:String,
     @SerializedName("jml_stok") var stok:Int,
     @SerializedName("harga_awal") var hargaAwal:Int,
-    @SerializedName("harga_jual") var hargaJual:Int
+    @SerializedName("harga_jual") var hargaJual:Int,
+    @SerializedName("image") var image:String
 ) : Parcelable
