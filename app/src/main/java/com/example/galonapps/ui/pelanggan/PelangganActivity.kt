@@ -14,22 +14,24 @@ import com.example.galonapps.ui.pelanggan.transaksi.TransaksiActivity
 
 class PelangganActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPelangganBinding
+
+     private var binding: ActivityPelangganBinding? =null
+        val bind get() = binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
-        binding.buttonCartPelanggan.setOnClickListener {
+        binding?.buttonCartPelanggan?.setOnClickListener {
             val intent = Intent(this, TransaksiActivity::class.java)
             startActivity(intent)
         }
 
     }
-    fun initView(){
+    private fun initView(){
         binding = ActivityPelangganBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding!!.root)
 
-        val navView: BottomNavigationView = binding.navView
+        val navView: BottomNavigationView = binding!!.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_pelanggan)
         // Passing each menu ID as a set of Ids because each

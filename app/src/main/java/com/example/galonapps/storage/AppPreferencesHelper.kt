@@ -1,17 +1,20 @@
 package com.example.galonapps.storage
 
 interface AppPreferencesHelper {
-
-    val name: String?
-    val email: String?
+    val id: String?
+    val nama: String?
+    val tempatLahir:String?
+    val jenisKelamin:String?
+    val alamat: String?
+    val member:String?
+    val desa:String?
+    val langUser: String?
+    val longUser: String?
     val role: String?
-    val userId: Int?
+    val idPelanggan:String?
+    val langPelanggan:String?
+    val longPelanggan:String?
     val cart: String?
-    val shopList: String?
-    val cartShop: String?
-    val cartDeliveryPref: String?
-    val cartShopInfo: String?
-    val cartDeliveryLocation: String?
 
     fun clearPreferences()
 

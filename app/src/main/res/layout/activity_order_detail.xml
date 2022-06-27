@@ -18,7 +18,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                    android:padding="16dp" android:id="@+id/linearLayout5" android:gravity="center">
+                    android:padding="16dp" android:id="@+id/layoutStatus" android:gravity="center">
                 <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+                    android:layout_height="wrap_content" app:layout_constraintTop_toBottomOf="@+id/layoutStatus"
                     android:padding="16dp" android:id="@+id/linearLayout6">
                 <LinearLayout
                         android:orientation="horizontal"
@@ -125,7 +125,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:listitem="@layout/list_galon_order_detail" tools:itemCount="3">
+                        tools:listitem="@layout/list_galon_order_detail" tools:itemCount="3"
+                        android:id="@+id/rvOrderDetail">
                 </androidx.recyclerview.widget.RecyclerView>
                 <LinearLayout
                         android:orientation="horizontal"
@@ -181,11 +182,12 @@
                 android:text="Bayar Sekarang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/buttonBayarOrderDetail"
-                style="@style/Widget.App.Button.OutlinedButton" android:textAllCaps="false"/>
+                style="@style/Widget.App.Button.OutlinedButton" android:textAllCaps="false" android:visibility="gone"
+                tools:visibility="visible"/>
         <Button
                 android:text="Cancel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/button6"
+                android:layout_height="wrap_content" android:id="@+id/buttonCancelOrderDetail"
                 style="@style/Widget.App.Button.OutlinedButton" android:textAllCaps="false"/>
     </LinearLayout>
     <!--    <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Bayar"/>-->

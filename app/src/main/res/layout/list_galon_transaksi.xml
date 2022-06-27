@@ -25,14 +25,6 @@
             app:layout_constraintStart_toStartOf="@+id/textNamaGalonTransaksi"
             app:layout_constraintTop_toBottomOf="@+id/textNamaGalonTransaksi"
             app:layout_constraintEnd_toEndOf="@+id/textNamaGalonTransaksi" android:layout_marginVertical="8dp"/>
-    <com.travijuu.numberpicker.library.NumberPicker android:layout_width="0dp"
-                                                    android:layout_height="0dp"
-                                                    app:layout_constraintStart_toStartOf="@+id/textNamaGalonTransaksi"
-                                                    app:layout_constraintTop_toBottomOf="@+id/textHargaGalonTransaksi"
-                                                    app:layout_constraintEnd_toEndOf="@+id/textHargaGalonTransaksi"
-                                                    android:layout_marginTop="16dp"
-                                                    android:id="@+id/numberPickerGalonTransaksi">
-    </com.travijuu.numberpicker.library.NumberPicker>
     <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="100dp"
             android:layout_height="100dp" tools:srcCompat="@tools:sample/avatars"
@@ -41,4 +33,13 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textNamaGalonTransaksi"
             app:layout_constraintHorizontal_bias="0.5"/>
+    <include
+            android:id="@+id/layoutQuantityControl"
+            layout="@layout/in_dec_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp" android:visibility="visible"
+            android:layout_gravity="start"
+            app:layout_constraintTop_toBottomOf="@+id/imageGalonTransaksi" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageGalonTransaksi"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

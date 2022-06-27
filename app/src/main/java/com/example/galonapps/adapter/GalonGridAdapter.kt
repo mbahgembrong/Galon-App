@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.galonapps.R
 import com.example.galonapps.databinding.GridGalonBinding
 import com.example.galonapps.model.Galon
+import com.example.galonapps.prefs
+import com.example.galonapps.ui.pelanggan.home.Cart
 import com.squareup.picasso.Picasso
 
 class GalonGridAdapter(private val context: Context, private val galonItemList: List<Galon>, private val listener: OnItemClickListener) : RecyclerView.Adapter<GalonGridAdapter.GalonItemViewHolder>() {
@@ -34,8 +36,16 @@ class GalonGridAdapter(private val context: Context, private val galonItemList: 
             binding.textMerekGrid.text = galon.merk
             binding.textIsiGrid.text =galon.isiGalon
             binding.textHargaGrid.text = "Rp. " + galon.hargaJual
+            if (Cart.showItem(galon) != null){
+                binding.buttonTambahGrid.visibility = View.GONE
+                binding.layoutQuantityControl.apply {
+                    root.visibility = View.VISIBLE
+                    textQuantity.text = Cart.showItem(galon)!!.quantity.toString()
+                }
+            }
             binding.buttonTambahGrid.setOnClickListener {
                 it.visibility = View.GONE
+                listener.onQuantityAdd(position)
                 binding.layoutQuantityControl.apply {
                     root.visibility = View.VISIBLE
                     textQuantity.text = "1"
