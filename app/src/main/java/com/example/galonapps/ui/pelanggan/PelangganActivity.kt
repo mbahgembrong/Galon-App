@@ -15,8 +15,8 @@ import com.example.galonapps.ui.pelanggan.transaksi.TransaksiActivity
 class PelangganActivity : AppCompatActivity() {
 
 
-     private var binding: ActivityPelangganBinding? =null
-        val bind get() = binding
+    private var binding: ActivityPelangganBinding? = null
+    val bind get() = binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,8 @@ class PelangganActivity : AppCompatActivity() {
         }
 
     }
-    private fun initView(){
+
+    private fun initView() {
         binding = ActivityPelangganBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
@@ -41,7 +42,7 @@ class PelangganActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_order, R.id.navigation_profile
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        setupActionBarWithNavController(navController, ])
         navView.setupWithNavController(navController)
     }
 }
