@@ -33,21 +33,23 @@
             android:layout_marginBottom="16dp" android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
             android:gravity="center_vertical" android:background="@drawable/bg_rounded"
             android:id="@+id/buttonCartPelanggan"
-            android:paddingHorizontal="16dp" android:visibility="gone">
+            android:paddingHorizontal="16dp" android:visibility="gone" tools:visibility="visible"
+            android:backgroundTint="@color/purple_500">
         <TextView
                 android:text="3 items"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/textItemCart"/>
+                android:layout_height="wrap_content" android:id="@+id/textItemCart" android:textColor="@color/white"
+                android:textStyle="bold"/>
         <TextView
                 android:text="48.600"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/textGrandTotalHarga" android:layout_weight="1"
                 android:layout_marginHorizontal="8dp"
-                android:gravity="end"/>
+                android:gravity="end" android:textColor="@color/white" android:textStyle="bold"/>
         <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp" app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24"
-                android:id="@+id/imageView3"/>
+                android:id="@+id/imageView3" android:tint="@color/white" android:padding="8dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

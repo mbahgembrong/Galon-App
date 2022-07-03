@@ -11,6 +11,16 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:background="@color/purple_500" android:padding="16dp">
+            <TextView
+                    android:text="Profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView11" android:textSize="20sp"
+                    android:textColor="@color/white" android:textStyle="bold"/>
+        </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inpNamaPelanggan"
                 android:layout_width="match_parent"
@@ -22,7 +32,7 @@
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="" />
+                    android:inputType=""/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inpTempatLahir"
@@ -35,7 +45,7 @@
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="" />
+                    android:inputType=""/>
         </com.google.android.material.textfield.TextInputLayout>
         <RadioGroup
                 android:layout_width="match_parent"
@@ -75,11 +85,11 @@
             <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="" />
+                    android:inputType=""/>
         </com.google.android.material.textfield.TextInputLayout>
         <Button
                 android:text="Button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/button3" android:layout_margin="16dp"/>
+                android:layout_height="wrap_content" android:id="@+id/buttonGantiAlamat2" android:layout_margin="16dp"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
