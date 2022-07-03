@@ -2,9 +2,11 @@ package com.example.galonapps
 
 import android.app.Application
 import android.content.SharedPreferences
+import android.util.Log
 import com.example.galonapps.model.Galon
 import com.example.galonapps.model.Transaksi
 import com.example.galonapps.storage.PreferencesHelper
+import timber.log.Timber
 
 
 val prefs: PreferencesHelper by lazy {
@@ -27,5 +29,18 @@ open class App : Application() {
 
         instance = this
         prefs = PreferencesHelper(applicationContext)
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        } else {
+            Timber.plant(ReleaseTree())
+        }
+    }
+}
+
+class ReleaseTree : Timber.Tree() {
+    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+        if (priority == Log.VERBOSE || priority == Log.DEBUG) {
+            return;
+        }
     }
 }

@@ -12,8 +12,14 @@
                                            app:layout_constraintEnd_toEndOf="parent"
                                            app:layout_constraintBottom_toBottomOf="parent"
                                            tools:ignore="SpeakableTextPresentCheck">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center">
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_marginTop="16dp" android:padding="8dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                      android:orientation="vertical" android:gravity="center">
+            <androidx.constraintlayout.widget.ConstraintLayout android:layout_height="wrap_content"
+                                                               android:layout_width="match_parent"
+                                                               android:background="@color/purple_500"
+                                                               android:paddingTop="16dp" android:paddingStart="8dp"
+                                                               android:paddingLeft="8dp" android:paddingEnd="8dp"
+                                                               android:paddingRight="8dp" android:paddingBottom="8dp">
                 <de.hdodenhof.circleimageview.CircleImageView android:layout_width="50dp" android:layout_height="50dp"
                                                               android:src="@drawable/ic_baseline_account_circle_24"
                                                               app:layout_constraintStart_toStartOf="parent"
@@ -27,21 +33,24 @@
                               app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
                               app:layout_constraintStart_toEndOf="@+id/circleImageView">
                     <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-                              android:text="Nama User"/>
+                              android:text="Nama User" android:id="@+id/textnamaUserTransaksi"
+                              android:textColor="@color/white" android:textStyle="bold" android:textSize="20sp"/>
                     <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-                              android:text="Alamat User"/>
+                              android:text="Alamat User" android:id="@+id/textAlamatUserTransaksi"
+                              android:textColor="@color/white" android:layout_marginTop="8dp"/>
                 </LinearLayout>
                 <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Ganti Alamat"
                         app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/buttonGantiAlamat"
-                        android:textAllCaps="false" style="@style/Widget.App.Button.OutlinedButton"/>
+                        android:textAllCaps="false" style="@style/Widget.App.Button.OutlinedButton"
+                        app:strokeColor="@color/white" android:textColor="@color/white"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
                                                        android:layout_height="wrap_content"
                                                        android:layout_marginTop="16dp"
                                                        tools:listitem="@layout/list_galon_transaksi" tools:itemCount="3"
-                                                       android:id="@+id/rvTransaksi"/>
+                                                       android:id="@+id/rvTransaksi" android:padding="16dp"/>
             <com.google.android.material.divider.MaterialDivider android:layout_width="match_parent"
                                                                  android:layout_height="3dp"/>
             <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -85,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-        android:gravity="center">
+                android:gravity="center">
 
             <ImageView
                     android:layout_width="wrap_content"

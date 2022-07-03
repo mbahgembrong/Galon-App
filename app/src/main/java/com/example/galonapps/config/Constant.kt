@@ -1,13 +1,17 @@
 package com.example.galonapps.config
 
 object  Constant {
+
+
     //SHARED PREFERENCE NAMES
+    const  val IS_LOGGED_IN= "isLoggedIn"
     const val LOGIN_PREFS = "login_prefs"
     const val CUSTOMER_PREFS = "customer_prefs"
     const val CART_PREFERENCES = "cart_prefs"
     const val CUSTOMER_ID = "customer_id"
     const val CUSTOMER_NAMA = "customer_nama"
     const val CUSTOMER_TEMPAT_LAHIR = "customer_tempat_lahir"
+    const val CUSTOMER_TANGGAL_LAHIR= "customer_tanggal_lahir"
     const val CUSTOMER_JENIS_KELAMIN = "customer_tempat_jenis_kelamin"
     const val CUSTOMER_ALAMAT = "customer_alamat"
     const val CUSTOMER_MEMBER = "customer_member"

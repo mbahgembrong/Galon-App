@@ -6,7 +6,7 @@
                                                    android:layout_height="wrap_content" android:paddingTop="16dp"
                                                    android:paddingRight="16dp" android:paddingLeft="16dp">
     <de.hdodenhof.circleimageview.CircleImageView android:layout_width="50dp" android:layout_height="50dp"
-                                                  android:src="@mipmap/ic_launcher"
+                                                  android:src="@drawable/ic_water"
                                                   app:layout_constraintTop_toTopOf="parent"
                                                   app:layout_constraintStart_toStartOf="parent"
                                                   app:layout_constraintBottom_toTopOf="@+id/divider"
@@ -30,20 +30,23 @@
                     android:text="grand total : 50000"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/textGrandTotalGalonOrder"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" android:textColor="@color/black"/>
             <TextView
                     android:text="3 items"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textItemGalonOrder" android:gravity="end"/>
+                    android:layout_height="wrap_content" android:id="@+id/textItemGalonOrder" android:gravity="end"
+                    android:textColor="@color/black"/>
         </LinearLayout>
         <TextView
                 android:text="status : dikembalikan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textStatusGalonOrder" android:layout_marginTop="2dp"/>
+                android:layout_height="wrap_content" android:id="@+id/textStatusGalonOrder"
+                android:layout_marginTop="2dp" android:textColor="@color/purple_500" android:textStyle="bold"/>
         <TextView
                 android:text="tanggal : 10-12-2022"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/textTanggalGalonOrder" android:layout_marginTop="8dp"/>
+                android:layout_height="wrap_content" android:id="@+id/textTanggalGalonOrder"
+                android:layout_marginTop="8dp" android:textColor="@color/black"/>
     </LinearLayout>
     <View
             android:id="@+id/divider"

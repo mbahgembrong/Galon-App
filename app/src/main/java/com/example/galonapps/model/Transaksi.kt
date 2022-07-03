@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Transaksi(
     @SerializedName("id") var id:String,
-    @SerializedName("pelanggan") var pelanggan: Pelanggan?,
-    @SerializedName("karyawan") var karyawan: Karyawan? =null,
-    @SerializedName("kurir") var kurir: Kurir? =null,
+    @SerializedName("pelanggan") var pelanggan: User?,
+    @SerializedName("karyawan") var karyawan: User? =null,
+    @SerializedName("kurir") var kurir: User? =null,
     @SerializedName("diskon") var diskon: Diskon? =null,
     @SerializedName("total") var total:Int,
     @SerializedName("status") var status:Int,

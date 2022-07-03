@@ -6,10 +6,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.pelanggan.order.OrderFragment">
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/linearLayout11" android:padding="16dp" android:background="@color/purple_500">
+        <TextView
+                android:text="Order Galonku"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView5" android:textColor="@color/white"
+                android:textSize="20sp" android:textStyle="bold"/>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" tools:listitem="@layout/list_galon_order"
-            android:id="@+id/rvOrder"/>
+            android:id="@+id/rvOrder" app:layout_constraintTop_toBottomOf="@+id/linearLayout11"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

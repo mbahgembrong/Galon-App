@@ -1,5 +1,6 @@
 package com.example.galonapps.ui.pelanggan.order
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -13,9 +14,11 @@ class OrderDetailActivity : AppCompatActivity() {
     private lateinit var galonAdapter: GalonOrderDetailAdapter
     private lateinit var transaksi: Transaksi
     private lateinit var orderDetailViewModel: OrderViewModel
-    companion object{
+
+    companion object {
         val ORDER_DETAIL_ACTIVITY = "order_detail_activity"
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         transaksi = intent.getParcelableExtra(ORDER_DETAIL_ACTIVITY)!!
@@ -36,12 +39,12 @@ class OrderDetailActivity : AppCompatActivity() {
         binding = ActivityOrderDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.textStatusOrderDetail.text = "Pesanan ${statusToString(transaksi.status)}"
-        binding.textKeteranganOrderDetail.text = transaksi.keterangan?:""
+        binding.textKeteranganOrderDetail.text = transaksi.keterangan ?: ""
         binding.textKaryawanOrderDetail.text = "Karyawan : ${transaksi.karyawan ?: "-"}"
         binding.textKurirOrderDetail.text = "Kurir : ${transaksi.kurir ?: "-"}"
-        binding.textNamaPelangganOrderDetail.text = "Tanggal : ${transaksi.pelanggan?:"-"}"
-        binding.textGrandTotalOrderDetail.text = "Rp. ${transaksi.total?:"-"}"
-        binding.textTanggalPemesananOrderDetail.text = "Tanggal : ${transaksi.createdAt?:"-"}"
+        binding.textNamaPelangganOrderDetail.text = "Tanggal : ${transaksi.pelanggan ?: "-"}"
+        binding.textGrandTotalOrderDetail.text = "Rp. ${transaksi.total ?: "-"}"
+        binding.textTanggalPemesananOrderDetail.text = "Tanggal : ${transaksi.createdAt ?: "-"}"
         if (transaksi.status == 1 || transaksi.status == 2)
             binding.buttonBayarOrderDetail.visibility = android.view.View.VISIBLE
         if (transaksi.status == 4 || transaksi.status == 5) {
@@ -53,7 +56,7 @@ class OrderDetailActivity : AppCompatActivity() {
     }
 
     private fun setObservers() {
-        orderDetailViewModel=ViewModelProvider(this).get(OrderViewModel::class.java)
+        orderDetailViewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
     }
 
     private fun setupRecyclerView() {
@@ -61,17 +64,19 @@ class OrderDetailActivity : AppCompatActivity() {
         binding.rvOrderDetail.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         binding.rvOrderDetail.adapter = galonAdapter
     }
+
     private fun statusColor(status: Int): Int {
-        return when(status){
-            0 -> R.color.ocean_200
-            1 -> android.graphics.Color.YELLOW
-            2 -> android.graphics.Color.RED
-            3 -> R.color.ocean_500
-            4 -> android.graphics.Color.GREEN
-            5 -> android.graphics.Color.RED
-            else -> R.color.ocean_700
+        return when (status) {
+            0 -> Color.parseColor("#66cee7")
+            1 -> Color.parseColor("#fdb129")
+            2 -> Color.parseColor("#9e2826")
+            3 -> Color.parseColor("#006881")
+            4 -> Color.parseColor("#269e30")
+            5 -> Color.parseColor("#9e2826")
+            else -> Color.parseColor("#9e2826")
         }
     }
+
     private fun statusToString(status: Int): String {
         return when (status) {
             0 -> "belum dikonfirmasi"

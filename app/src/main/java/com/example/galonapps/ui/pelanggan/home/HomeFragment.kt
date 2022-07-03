@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -48,14 +49,29 @@ class HomeFragment : Fragment() {
         updateCartUI()
         setObservers()
         homeViewModel.getGalon()
+        binding.buttonLogOut.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Logout")
+                .setMessage("Apakah anda yakin ingin logout?")
+                .setPositiveButton("Ya") { dialog, which ->
+                    dialog.dismiss()
+                    prefs.isLoggedIn = false
+                    prefs.clearPreferences()
+                    activity?.finish()
+                }
+                .setNegativeButton("Tidak") { dialog, which ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
-    fun initView(){
-        binding.textNamaPelanggan.text = "Bayu Okta"
-
+    fun initView() {
+        binding.textNamaPelanggan.text = prefs.nama
         setupGalonRecyclerView()
     }
-    fun setObservers(){
+
+    fun setObservers() {
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
         homeViewModel.getGalonDataList.observe(this, Observer<List<Galon>> {
@@ -69,7 +85,8 @@ class HomeFragment : Fragment() {
         })
 
     }
-    fun setupGalonRecyclerView(){
+
+    fun setupGalonRecyclerView() {
         galonAdapter = GalonGridAdapter(requireContext(), galonList, object : GalonGridAdapter.OnItemClickListener {
             override fun onQuantityAdd(position: Int) {
                 println("quantity add clicked $position")
@@ -84,18 +101,18 @@ class HomeFragment : Fragment() {
                 updateCartUI()
             }
         })
-        binding.rvHome.layoutManager = GridLayoutManager(activity,2)
+        binding.rvHome.layoutManager = GridLayoutManager(activity, 2)
         binding.rvHome.adapter = galonAdapter
     }
+
     private fun updateCartUI() {
-        if (!prefs.getCart().isNullOrEmpty()){
+        if (!prefs.getCart().isNullOrEmpty()) {
             (requireActivity() as PelangganActivity).bind?.apply {
                 buttonCartPelanggan.visibility = View.VISIBLE
-                textItemCart.text = Cart.getShoppingCartSize().toString()+" items"
+                textItemCart.text = Cart.getShoppingCartSize().toString() + " items"
                 textGrandTotalHarga.text = Cart.getShoppingTotal().toString()
             }
-        }
-        else{
+        } else {
             (requireActivity() as PelangganActivity).bind?.apply {
                 buttonCartPelanggan.visibility = View.GONE
             }

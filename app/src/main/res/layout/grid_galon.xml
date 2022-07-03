@@ -9,8 +9,8 @@
         <com.google.android.material.imageview.ShapeableImageView android:layout_width="150dp"
                                                                   android:layout_height="150dp"
                                                                   tools:ignore="ImageContrastCheck"
-                                                                  app:srcCompat="@drawable/ic_launcher_background"
-                                                                  app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+                                                                  android:src="@drawable/ic_water"
+                                                                  paddapp:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
                                                                   android:id="@+id/imageGridGalon"/>
         <TextView android:layout_width="match_parent" android:layout_height="match_parent"
                   android:id="@+id/textMerekGrid"
@@ -18,7 +18,8 @@
                   app:autoSizeTextType="uniform"
                   android:scrollHorizontally="true"
                   android:singleLine="true"
-                  android:text="Ayam Goreng Enak Sekali lezat"/>
+                  android:text="Ayam Goreng Enak Sekali lezat" android:textColor="@color/black"
+                  android:textStyle="bold"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -26,10 +27,11 @@
             <TextView
                     android:text="500ml"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textIsiGrid" android:layout_weight="1"/>
+                    android:layout_height="wrap_content" android:id="@+id/textIsiGrid" android:layout_weight="1"
+                    android:textColor="@color/black"/>
             <TextView android:layout_width="match_parent" android:layout_height="match_parent"
                       android:id="@+id/textHargaGrid" android:text="50000" android:layout_weight="1"
-                      android:gravity="end"/>
+                      android:gravity="end" android:textColor="@color/black"/>
         </LinearLayout>
         <include
                 android:id="@+id/layoutQuantityControl"
@@ -43,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp" android:id="@+id/buttonTambahGrid"
                 style="@style/Widget.App.Button.OutlinedButton" android:layout_gravity="center"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false" app:strokeColor="@color/purple_500"/>
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
