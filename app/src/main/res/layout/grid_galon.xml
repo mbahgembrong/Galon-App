@@ -10,7 +10,7 @@
                                                                   android:layout_height="150dp"
                                                                   tools:ignore="ImageContrastCheck"
                                                                   android:src="@drawable/ic_water"
-                                                                  paddapp:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+                                                                  app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
                                                                   android:id="@+id/imageGridGalon"/>
         <TextView android:layout_width="match_parent" android:layout_height="match_parent"
                   android:id="@+id/textMerekGrid"
