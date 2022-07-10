@@ -14,13 +14,14 @@ import com.example.galonapps.adapter.OrderAdapter
 import com.example.galonapps.databinding.FragmentOrderBinding
 import com.example.galonapps.model.Transaksi
 import com.example.galonapps.ui.pelanggan.order.OrderDetailActivity.Companion.ORDER_DETAIL_ACTIVITY
+import timber.log.Timber
 
 class OrderFragment : Fragment() {
 
     private lateinit var orderViewModel: OrderViewModel
     private var _binding: FragmentOrderBinding? = null
     private lateinit var orderAdapter: OrderAdapter
-    private var orderList:ArrayList<Transaksi> = ArrayList()
+    private var orderList: ArrayList<Transaksi> = ArrayList()
 
     private val binding get() = _binding!!
 
@@ -41,10 +42,12 @@ class OrderFragment : Fragment() {
         super.onResume()
         orderViewModel.getOrder()
     }
-    fun initView(){
+
+    fun initView() {
         setupRecyclerView()
     }
-    fun setObservers(){
+
+    fun setObservers() {
         orderViewModel =
             ViewModelProvider(this)[OrderViewModel::class.java]
         orderViewModel.getOrderDataList.observe(viewLifecycleOwner, Observer {
@@ -57,9 +60,11 @@ class OrderFragment : Fragment() {
             }
         })
     }
-    fun setupRecyclerView(){
+
+    fun setupRecyclerView() {
         orderAdapter = OrderAdapter(requireContext(), orderList, object : OrderAdapter.OnItemClickListener {
             override fun onClickListener(position: Int) {
+//                Timber.d("detail ${orderList[position].detailTransaksi[0].id}")
                 val intent = Intent(requireContext(), OrderDetailActivity::class.java)
                 intent.putExtra(ORDER_DETAIL_ACTIVITY, orderList[position])
                 startActivity(intent)

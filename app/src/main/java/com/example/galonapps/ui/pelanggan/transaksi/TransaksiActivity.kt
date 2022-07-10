@@ -1,17 +1,19 @@
 package com.example.galonapps.ui.pelanggan.transaksi
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telecom.Call.Callback
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModel
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.galonapps.R
+import com.example.galonapps.App
 import com.example.galonapps.adapter.GalonTransaksiListAdapter
 import com.example.galonapps.databinding.ActivityTransaksiBinding
 import com.example.galonapps.model.CartItem
+import com.example.galonapps.model.TransaksiRequest
 import com.example.galonapps.prefs
+import com.example.galonapps.ui.pelanggan.PelangganActivity
 
 class TransaksiActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTransaksiBinding
@@ -23,19 +25,25 @@ class TransaksiActivity : AppCompatActivity() {
         initView()
         setObservers()
         transaksiViewModel.getCart()
-        transaksiViewModel.getGrandTotal()
+        transaksiViewModel.getHargaTotal()
         binding.buttonTransaksi.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Apakah dibayar sekarang?")
-                .setPositiveButton("Ya") { dialog, which ->
-                    transaksiViewModel.bayar()
-                    finish()
-                }
-                .setNegativeButton("Tidak") { dialog, which ->
-                    transaksiViewModel.addTransaksi()
-                    finish()
-                }
-                .show()
+            App.alertDialog(this) {
+                transaksiViewModel.addTransaksi(
+                    TransaksiRequest(
+                        null,
+                        prefs.idPelanggan,
+                        null,
+                        cartList,
+                        null,
+                        null
+                    )
+                )
+                val intent = Intent(this, PelangganActivity::class.java)
+                intent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent).also { finish() }
+            }
+
         }
         binding.buttonGantiAlamat.setOnClickListener {
             val intent = Intent(this, AlamatActivity::class.java)
@@ -43,13 +51,22 @@ class TransaksiActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateView()
+        setObservers()
+    }
 
     private fun initView() {
         binding = ActivityTransaksiBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        updateView()
+        setupOrderRecyclerView()
+    }
+
+    private fun updateView() {
         binding.textnamaUserTransaksi.text = prefs.nama
         binding.textAlamatUserTransaksi.text = prefs.alamat
-        setupOrderRecyclerView()
     }
 
     fun setObservers() {
@@ -64,9 +81,24 @@ class TransaksiActivity : AppCompatActivity() {
                 transaksiAdapter.notifyDataSetChanged()
             }
         }
-        transaksiViewModel.getGrandTotal.observe(this) {
-            binding.textGrandTotalTransaksi2.text = "Rp. $it"
-            binding.buttonTransaksi.isEnabled = it != 0
+        transaksiViewModel.getHargaTotal.observe(this) {
+            binding.textTotalHargaTransaksi.text = App.currencyFormat(it)
+            binding.textOngkirTransaksi.text = App.currencyFormat(prefs.getDesa()?.ongkir)
+            val grandTotal = it + (prefs.getDesa()?.ongkir ?: 0)
+            binding.textGrandTotalTransaksi.text = App.currencyFormat(grandTotal)
+            binding.textGrandTotalTransaksi2.text = App.currencyFormat(grandTotal)
+            binding.buttonTransaksi.isEnabled = grandTotal > 0
+        }
+        transaksiViewModel.getTransaksi.observe(this) {
+//            if (it != null) {
+//                val intent = Intent(this, BayarActivity::class.java)
+//                val bundle = Bundle()
+//                bundle.putString("idTransaksi", it.id)
+//                bundle.putInt("status", it.status)
+//                bundle.putInt("grandTotal", it.total)
+//                intent.putExtra(BayarActivity.ACTIVITY_PEMBAYARAN, bundle)
+//                startActivity(intent).also { finish() }
+//            }
         }
     }
 
@@ -87,4 +119,5 @@ class TransaksiActivity : AppCompatActivity() {
         binding.rvTransaksi.adapter = transaksiAdapter
 
     }
+
 }

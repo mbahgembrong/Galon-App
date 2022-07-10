@@ -2,16 +2,30 @@ package com.example.galonapps.ui.pelanggan.transaksi
 
 import android.animation.TypeEvaluator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.location.Geocoder
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.provider.MediaStore
+import android.view.MotionEvent
+import android.view.View
+import android.widget.*
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.ViewModelProvider
+import com.example.galonapps.App
 import com.example.galonapps.R
 import com.example.galonapps.databinding.ActivityAlamatBinding
 import com.example.galonapps.databinding.ActivityTransaksiBinding
 import com.example.galonapps.helper.LocationPermissionHelper
+import com.example.galonapps.model.Desa
+import com.example.galonapps.prefs
+import com.example.galonapps.ui.login.LoginActivity
+import com.example.galonapps.ui.pelanggan.PelangganActivity
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -23,28 +37,129 @@ import com.mapbox.maps.plugin.gestures.*
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
+import mumayank.com.airlocationlibrary.AirLocation
 import timber.log.Timber
+import www.sanju.motiontoast.MotionToast
 import java.util.*
 
 class AlamatActivity : AppCompatActivity(), OnMapClickListener {
     lateinit var binding: ActivityAlamatBinding
     private lateinit var mapView: MapView
     lateinit var userLocation: Point
+    lateinit var viewModel: TransaksiViewModel
+    var listDesa = ArrayList<Desa>()
+    lateinit var desaClicked: Desa
+    var newAddress: String? = null
+    var alamatBaru: String? = null
+    var newPoint: Point? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        desaClicked = prefs.getDesa()!!
         initView()
         observer()
         mapView = binding.mapView
-        onMapReady()
+        mapBoxpermision()
+        binding.buttonGantiAlamat2.setOnClickListener {
+            App.alertDialog(this) {
+                viewModel.updateAlamat(
+                    desaClicked.id,
+                    alamatBaru ?: prefs.alamat!!,
+                    newPoint ?: Point.fromLngLat(prefs.longUser!!.toDouble(), prefs.langUser!!.toDouble())
+                )
+            }
+        }
     }
 
     private fun observer() {
-
+        viewModel = ViewModelProvider(this).get(TransaksiViewModel::class.java)
+        viewModel.getListDesa.observe(this, androidx.lifecycle.Observer {
+            it.let { it1 -> listDesa.addAll(it1) }
+            val desas = ArrayList<String>()
+            for (i in listDesa) {
+                desas.add(i.nama)
+            }
+            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, desas)
+            (binding.inpDesaPelanggan as? AutoCompleteTextView)?.apply {
+                setAdapter(adapter)
+//                setSelection(listDesa.indexOf(desaClicked))
+                setOnTouchListener { view, motionEvent ->
+                    if (motionEvent.action == MotionEvent.ACTION_UP) {
+                        this.showDropDown()
+                    }
+                    false
+                }
+            }
+            (binding.inpDesaPelanggan as? AutoCompleteTextView)?.setOnItemClickListener { parent, view, position, id ->
+                desaClicked = listDesa[position]
+//                binding.inpDesaPelanggan.setText(desaClicked?.nama)
+            }
+        })
+        viewModel.getDesa()
+        viewModel.isUpdated.observe(this, androidx.lifecycle.Observer {
+            when (it) {
+                200 -> {
+                    toast("Berhasil Update", MotionToast.TOAST_SUCCESS)
+                    onBackPressed()
+                }
+                205 -> {
+                    toast(
+                        "Ada data yang kosong",
+                        MotionToast.TOAST_WARNING,
+                    )
+                }
+                500 -> {
+//                    toast(
+//                        "Akun sudah terdaftar, tolong ganti nama akun",
+//                        MotionToast.TOAST_INFO,
+//                    )
+                }
+                404 -> {
+                    toast(
+                        "Periksa koneksi anda",
+                        MotionToast.TOAST_NO_INTERNET,
+                    )
+                }
+                else -> {
+                    toast(
+                        "Register Failed",
+                        MotionToast.TOAST_ERROR,
+                    )
+                }
+            }
+        })
     }
 
     private fun initView() {
         binding = ActivityAlamatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.inputTextAlamat.setText(prefs?.alamat)
+        binding.radioGroupAamat.setOnCheckedChangeListener { radioGroup, i ->
+            var radioButton = radioGroup.findViewById<RadioButton>(radioGroup.getCheckedRadioButtonId())
+            if (radioButton.text == "Tetap") {
+                binding.inputTextAlamat.setText(prefs?.alamat)
+                alamatBaru = null
+                newPoint = null
+            } else {
+                newPoint = userLocation
+                alamatBaru = newAddress
+                binding.inputTextAlamat.setText(newAddress)
+            }
+        }
+        binding.radioButton3.isChecked = true
+    }
+
+    fun toast(message: String, status: String) {
+        MotionToast.createToast(
+            this@AlamatActivity, message,
+            status,
+            MotionToast.GRAVITY_TOP,
+            MotionToast.SHORT_DURATION,
+            ResourcesCompat.getFont(this, com.example.galonapps.R.font.helvetica_regular)
+        )
+    }
+
+    fun mapBoxpermision() = runWithPermissions(android.Manifest.permission.ACCESS_FINE_LOCATION) {
+        onMapReady()
     }
 
     //    mapbox
@@ -61,7 +176,7 @@ class AlamatActivity : AppCompatActivity(), OnMapClickListener {
         userLocation = it
         val geocoder = Geocoder(applicationContext, Locale.getDefault())
         var addresses = geocoder.getFromLocation(userLocation.latitude(), userLocation.longitude(), 1)
-        Timber.d("alamat : ${addresses[0].postalCode}")
+        newAddress = addresses[0].getAddressLine(0)
     }
 
     private val onMoveListener = object : OnMoveListener {

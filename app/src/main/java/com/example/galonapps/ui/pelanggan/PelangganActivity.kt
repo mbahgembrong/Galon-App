@@ -31,7 +31,8 @@ class PelangganActivity : AppCompatActivity() {
     private fun initView() {
         binding = ActivityPelangganBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
-
+        intent.flags =
+            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         val navView: BottomNavigationView = binding!!.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_pelanggan)

@@ -1,6 +1,7 @@
 package com.example.galonapps.ui.pelanggan.home
 
 import android.R
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.galonapps.App
 import com.example.galonapps.adapter.GalonGridAdapter
 import com.example.galonapps.databinding.ActivityPelangganBinding
 import com.example.galonapps.databinding.FragmentHomeBinding
@@ -20,6 +22,7 @@ import com.example.galonapps.model.CartItem
 import com.example.galonapps.model.Galon
 import com.example.galonapps.prefs
 import com.example.galonapps.ui.component.VerticalMarginItemDecoration
+import com.example.galonapps.ui.login.LoginActivity
 import com.example.galonapps.ui.pelanggan.PelangganActivity
 
 
@@ -44,6 +47,7 @@ class HomeFragment : Fragment() {
         return root
     }
 
+
     override fun onResume() {
         super.onResume()
         updateCartUI()
@@ -55,9 +59,11 @@ class HomeFragment : Fragment() {
                 .setMessage("Apakah anda yakin ingin logout?")
                 .setPositiveButton("Ya") { dialog, which ->
                     dialog.dismiss()
+                    homeViewModel.logout()
                     prefs.isLoggedIn = false
                     prefs.clearPreferences()
-                    activity?.finish()
+                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                    startActivity(intent).also { requireActivity().finish() }
                 }
                 .setNegativeButton("Tidak") { dialog, which ->
                     dialog.dismiss()
@@ -81,6 +87,11 @@ class HomeFragment : Fragment() {
                 galonList.clear()
                 it.let { it1 -> galonList.addAll(it1) }
                 galonAdapter.notifyDataSetChanged()
+            }
+        })
+        homeViewModel.isLogout.observe(this, Observer<Boolean> {
+            if (it == true) {
+
             }
         })
 
@@ -110,7 +121,7 @@ class HomeFragment : Fragment() {
             (requireActivity() as PelangganActivity).bind?.apply {
                 buttonCartPelanggan.visibility = View.VISIBLE
                 textItemCart.text = Cart.getShoppingCartSize().toString() + " items"
-                textGrandTotalHarga.text = Cart.getShoppingTotal().toString()
+                textGrandTotalHarga.text = App.currencyFormat(Cart.getShoppingTotal())
             }
         } else {
             (requireActivity() as PelangganActivity).bind?.apply {

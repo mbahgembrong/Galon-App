@@ -1,6 +1,7 @@
 package com.example.galonapps.ui.login
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
@@ -13,9 +14,12 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.R
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.galonapps.databinding.ActivityRegisterBinding
+import com.example.galonapps.model.Desa
 import com.example.galonapps.model.User
+import com.example.galonapps.ui.pelanggan.PelangganActivity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -23,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.datepicker.MaterialDatePicker
 import mumayank.com.airlocationlibrary.AirLocation
 import timber.log.Timber
+import www.sanju.motiontoast.MotionToast
 import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,10 +37,10 @@ import kotlin.collections.ArrayList
 class RegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRegisterBinding
     lateinit var viewModel: AuthViewModel
-    lateinit var dateData: String
-    lateinit var listDesa: ArrayList<String>
-    lateinit var jenisKelamin: String
-
+    var dateData: String = ""
+    var listDesa = ArrayList<Desa>()
+    var jenisKelamin: String = ""
+    var desaClicked: Desa? = null
     var lat: Double = 0.0;
     var lng: Double = 0.0;
     var airLoc: AirLocation? = null
@@ -56,7 +61,8 @@ class RegisterActivity : AppCompatActivity() {
         binding.buttonRegister.setOnClickListener {
             viewModel.register(
                 User(
-                    UUID.randomUUID().toString(),
+                    null,
+                    null,
                     binding.inputTextNama.text.toString(),
                     binding.inputTextTempatLahir.text.toString(),
                     dateData,
@@ -64,26 +70,62 @@ class RegisterActivity : AppCompatActivity() {
                     binding.inputTextAlamat.text.toString(),
                     lat,
                     lng,
-                    0,
-                    binding.inputTextDesa.text.toString(),
-                    "pelanggan"
+                    binding.inputTextPassword2.text.toString(),
+                    binding.inputTextUsername.text.toString(),
+                    desaClicked,
+                    null,
+                    null,
+                    null,
                 )
             )
-            finish()
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setObserver() {
-        viewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
-        viewModel.isRegister.observe(this, androidx.lifecycle.Observer {
-            if (it) {
-                finish()
+        viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
+        viewModel.isRegistered.observe(this, androidx.lifecycle.Observer {
+            when (it) {
+                200 -> {
+                    toast("Berhasil Register", MotionToast.TOAST_SUCCESS)
+                    val intent = Intent(this, PelangganActivity::class.java)
+                    startActivity(intent).also { finish() }
+                }
+                205 -> {
+                    toast(
+                        "Ada data yang kosong",
+                        MotionToast.TOAST_WARNING,
+                    )
+                }
+                500 -> {
+//                    toast(
+//                        "Akun sudah terdaftar, tolong ganti nama akun",
+//                        MotionToast.TOAST_INFO,
+//                    )
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent).also { finish() }
+                }
+                404 -> {
+                    toast(
+                        "Periksa koneksi anda",
+                        MotionToast.TOAST_NO_INTERNET,
+                    )
+                }
+                else -> {
+                    toast(
+                        "Register Failed",
+                        MotionToast.TOAST_ERROR,
+                    )
+                }
             }
         })
         viewModel.getListDesa.observe(this, androidx.lifecycle.Observer {
-            listDesa = it as ArrayList<String>
-            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listDesa)
+            it.let { it1 -> listDesa.addAll(it1) }
+            val desas = ArrayList<String>()
+            for (i in listDesa) {
+                desas.add(i.nama)
+            }
+            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, desas)
             binding.inputTextDesa.apply {
                 setAdapter(adapter)
                 setOnTouchListener { view, motionEvent ->
@@ -92,6 +134,10 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     false
                 }
+            }
+            binding.inputTextDesa.setOnItemClickListener { parent, view, position, id ->
+                desaClicked = listDesa[position]
+//                binding.inputTextDesa.setText(desaClicked?.nama)
             }
         })
     }
@@ -124,6 +170,7 @@ class RegisterActivity : AppCompatActivity() {
         val password = intent.getStringExtra("password")
         binding.inputTextUsername.setText(username)
         binding.inputTextPassword2.setText(password)
+
         val datePicker = MaterialDatePicker.Builder.datePicker().build()
         binding.buttonTanggalLahir.setOnClickListener {
             datePicker.show(supportFragmentManager, datePicker.toString())
@@ -148,4 +195,13 @@ class RegisterActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    fun toast(message: String, status: String) {
+        MotionToast.createToast(
+            this@RegisterActivity, message,
+            status,
+            MotionToast.GRAVITY_TOP,
+            MotionToast.SHORT_DURATION,
+            ResourcesCompat.getFont(this, com.example.galonapps.R.font.helvetica_regular)
+        )
+    }
 }

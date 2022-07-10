@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.galonapps"
-        minSdk 23
+        minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -75,8 +75,9 @@ dependencies {
     implementation('com.mapbox.maps:android:10.6.0') {
         exclude group: 'group_name', module: 'module_name'
     }
-    implementation "com.mapbox.navigation:android:2.4.0"
-    implementation "com.google.android.gms:play-services-location:19.0.1"
+    implementation "com.mapbox.navigation:ui-dropin:2.6.0"
+    implementation "com.mapbox.navigation:android:2.4.1"
+    implementation "com.google.android.gms:play-services-location:20.0.0"
     implementation 'com.github.mumayank:AirLocation:1.2'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.github.quickpermissions:quickpermissions-kotlin:0.4.1'
@@ -93,6 +94,17 @@ dependencies {
     implementation 'com.github.travijuu:numberpicker:1.0.7'
 //    timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+//Toast
+    implementation 'com.github.Spikeysanju:MotionToast:1.1'
+
+//    Camera
+    def camerax_version = "1.0.0-beta06"
+// CameraX core library using camera2 implementation
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+// CameraX Lifecycle Library
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+// CameraX View class
+    implementation "androidx.camera:camera-view:1.0.0-alpha13"
 }
 kapt {
     correctErrorTypes true

@@ -6,14 +6,20 @@ import android.view.View
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.galonapps.App
 import com.example.galonapps.R
+import com.example.galonapps.config.Constant
 import com.example.galonapps.databinding.GridGalonBinding
 import com.example.galonapps.model.Galon
 import com.example.galonapps.prefs
 import com.example.galonapps.ui.pelanggan.home.Cart
 import com.squareup.picasso.Picasso
 
-class GalonGridAdapter(private val context: Context, private val galonItemList: List<Galon>, private val listener: OnItemClickListener) : RecyclerView.Adapter<GalonGridAdapter.GalonItemViewHolder>() {
+class GalonGridAdapter(
+    private val context: Context,
+    private val galonItemList: List<Galon>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<GalonGridAdapter.GalonItemViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -32,11 +38,12 @@ class GalonGridAdapter(private val context: Context, private val galonItemList: 
 
     class GalonItemViewHolder(var binding: GridGalonBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(galon: Galon, position: Int, listener: OnItemClickListener) {
-            Picasso.get().load(galon.image).placeholder(R.drawable.ic_launcher_background).into(binding.imageGridGalon)
+            Picasso.get().load("${Constant.GALON_URL}${galon.image}").placeholder(R.drawable.ic_water)
+                .into(binding.imageGridGalon)
             binding.textMerekGrid.text = galon.merk
-            binding.textIsiGrid.text =galon.isiGalon
-            binding.textHargaGrid.text = "Rp. " + galon.hargaJual
-            if (Cart.showItem(galon) != null){
+            binding.textIsiGrid.text = galon.isiGalon
+            binding.textHargaGrid.text = App.currencyFormat(galon.hargaJual)
+            if (Cart.showItem(galon) != null) {
                 binding.buttonTambahGrid.visibility = View.GONE
                 binding.layoutQuantityControl.apply {
                     root.visibility = View.VISIBLE
@@ -54,7 +61,7 @@ class GalonGridAdapter(private val context: Context, private val galonItemList: 
             binding.layoutQuantityControl.imageAdd.setOnClickListener {
                 listener.onQuantityAdd(position)
                 binding.layoutQuantityControl.textQuantity.apply {
-                    text = ((text.toString().toInt()+1).toString())
+                    text = ((text.toString().toInt() + 1).toString())
                 }
             }
             binding.layoutQuantityControl.imageSub.setOnClickListener {
@@ -62,10 +69,10 @@ class GalonGridAdapter(private val context: Context, private val galonItemList: 
                 if (binding.layoutQuantityControl.textQuantity.text.toString().toInt() == 1) {
                     binding.layoutQuantityControl.root.visibility = View.GONE
                     binding.buttonTambahGrid.visibility = View.VISIBLE
-                }else
-                binding.layoutQuantityControl.textQuantity.apply {
-                    text = ((this.text.toString().toInt()-1).toString())
-                }
+                } else
+                    binding.layoutQuantityControl.textQuantity.apply {
+                        text = ((this.text.toString().toInt() - 1).toString())
+                    }
             }
         }
     }

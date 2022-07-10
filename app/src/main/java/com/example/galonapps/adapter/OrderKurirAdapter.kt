@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.galonapps.databinding.ListOrderKurirBinding
 import com.example.galonapps.model.DetailTransaksi
 import com.example.galonapps.model.Transaksi
+import timber.log.Timber
 
 class OrderKurirAdapter(
     private val context: Context,
@@ -34,11 +35,13 @@ class OrderKurirAdapter(
     class OrderItemViewHolder(var binding: ListOrderKurirBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(order: Transaksi, position: Int, listener: OnItemClickListener) {
-            binding.textNamaUserListOrderKurir.text = order.pelanggan?.nama
-            binding.textDesaUserListOrderKurir.text = "Desa : ${order.pelanggan?.desa}"
+            binding.textNamaUserListOrderKurir.text = order.pelanggan?.nama ?: "-"
+            binding.textDesaUserListOrderKurir.text = "Desa : ${order.pelanggan?.desa?.nama}"
             binding.textAlamatUserListOrderKurir.text = order.pelanggan?.alamat
             binding.textDateListOrderKurir.text = "Tanggal : ${order.createdAt}"
             binding.root.setOnClickListener { listener.onClickListener(position) }
+            if (order.status == 4)
+                binding.buttonDrive.visibility = ViewGroup.GONE
             binding.buttonDrive.setOnClickListener { listener.onDriverClickListener(position) }
         }
 

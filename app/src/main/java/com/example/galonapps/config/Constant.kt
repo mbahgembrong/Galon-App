@@ -1,27 +1,30 @@
 package com.example.galonapps.config
 
-object  Constant {
+object Constant {
+    const val BASE_URL = "http://192.168.22.3/"
+    const val GALON_URL = "${BASE_URL}img_galon/"
 
+    const val KETERANGAN_PEMBAYARAN = "Bayar Orderanmu ke rekening kami \n Bank Mandiri"
 
     //SHARED PREFERENCE NAMES
-    const  val IS_LOGGED_IN= "isLoggedIn"
+    const val IS_LOGGED_IN = "isLoggedIn"
     const val LOGIN_PREFS = "login_prefs"
-    const val CUSTOMER_PREFS = "customer_prefs"
+    const val USER_PREFS = "user_prefs"
     const val CART_PREFERENCES = "cart_prefs"
-    const val CUSTOMER_ID = "customer_id"
-    const val CUSTOMER_NAMA = "customer_nama"
-    const val CUSTOMER_TEMPAT_LAHIR = "customer_tempat_lahir"
-    const val CUSTOMER_TANGGAL_LAHIR= "customer_tanggal_lahir"
-    const val CUSTOMER_JENIS_KELAMIN = "customer_tempat_jenis_kelamin"
-    const val CUSTOMER_ALAMAT = "customer_alamat"
-    const val CUSTOMER_MEMBER = "customer_member"
-    const val CUSTOMER_DESA ="customer_desa"
-    const val CUSTOMER_LANG_USER ="customer_lang_user"
-    const val CUSTOMER_LONG_USER ="customer_long_user"
-    const val CUSTOMER_LANG_PELANGGAN ="customer_lang_pelanggan"
-    const val CUSTOMER_LONG_PELANGGAN = "customer_long_pelanggan"
-    const val CUSTOMER_ID_PELANGGAN = "customer_id_pelanggan"
-    const val CUSTOMER_ROLE ="customer_role"
-    const val CART ="cart"
+    const val USER_ID_USER = "user_id_USER"
+    const val USER_ID_PELANGGAN = "user_id_PELANGGAN"
+    const val USER_NAMA = "user_nama"
+    const val USER_TEMPAT_LAHIR = "user_tempat_lahir"
+    const val USER_TANGGAL_LAHIR = "user_tanggal_lahir"
+    const val USER_JENIS_KELAMIN = "user_tempat_jenis_kelamin"
+    const val USER_ALAMAT = "user_alamat"
+    const val USER_MEMBER = "user_member"
+    const val USER_DESA = "user_desa"
+    const val USER_LANG = "user_lang"
+    const val USER_LONG = "user_longr"
+    const val USER_TOKEN = "user_token"
+    const val USER_ROLE = "user_role"
+    const val CART = "cart"
+
 
 }

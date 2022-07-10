@@ -59,19 +59,36 @@
             <com.google.android.material.divider.MaterialDivider android:layout_width="match_parent"
                                                                  android:layout_height="3dp"/>
             <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content"
-                                               android:layout_margin="16dp" tools:visibility="gone"
-                                               android:visibility="gone">
+                                               android:layout_margin="16dp" tools:visibility="visible"
+                                               android:visibility="visible">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                               android:padding="16dp" android:orientation="vertical">
                     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                               android:text="Ringkasan Pembayaran"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                                  android:orientation="horizontal" android:layout_marginTop="16dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:text="Total"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                                  android:text="Rp. 5000"
+                                  android:gravity="end" android:id="@+id/textTotalHargaTransaksi"/>
+                    </LinearLayout>
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                                   android:orientation="horizontal" android:layout_marginTop="16dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                  android:text="Harga"/>
+                                  android:text="Ongkir"/>
                         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                                  android:text="50000"
-                                  android:gravity="end" android:id="@+id/txtHarga"/>
+                                  android:text="Rp.5000"
+                                  android:gravity="end" android:id="@+id/textOngkirTransaksi"/>
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                                  android:orientation="horizontal" android:layout_marginTop="16dp"
+                                  android:visibility="gone" tools:visibility="visible">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                  android:text="Diskon"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                                  android:text="Rp.5000"
+                                  android:gravity="end" android:id="@+id/textDiskonTransaksi"/>
                     </LinearLayout>
                     <com.google.android.material.divider.MaterialDivider
                             android:layout_width="match_parent"

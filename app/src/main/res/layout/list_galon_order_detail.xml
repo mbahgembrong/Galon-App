@@ -28,6 +28,6 @@
         </LinearLayout>
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:text="total : Rp. 50000" android:gravity="end" android:id="@+id/textTotalGalonOrderDetail"
-                  android:textColor="@color/black" android:textStyle="bold" android:layout_marginTop="8dp"/>
+                  android:textColor="@color/black" android:layout_marginTop="8dp" android:textStyle="normal"/>
     </LinearLayout>
 </LinearLayout>

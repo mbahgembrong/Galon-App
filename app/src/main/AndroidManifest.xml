@@ -3,30 +3,35 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.example.galonapps"
           tools:ignore="CoarseFineLocation">
-
+    <uses-feature android:name="android.hardware.camera.any"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission
-            android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
-            android:name=".App"
+            android:requestLegacyExternalStorage="true"
             android:allowBackup="true"
+            android:name=".App"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.GalonApps"
-            android:usesCleartextTraffic="true">
+            android:usesCleartextTraffic="true"
+            tools:targetApi="m">
+        <activity
+                android:name=".ui.pelanggan.transaksi.BayarActivity"
+                android:exported="false"/>
         <activity
                 android:name=".ui.pelanggan.transaksi.AlamatActivity"
-                android:exported="true"/>
+                android:exported="false"/>
         <activity
                 android:name=".ui.login.RegisterActivity"
-                android:exported="true"/>
+                android:exported="false"/>
         <activity
                 android:name=".ui.login.LoginActivity"
-                android:exported="true"
-                android:label="@string/title_activity_login">
+                android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -35,8 +40,11 @@
         </activity>
         <activity
                 android:name=".ui.kurir.maps.MapsActivity"
-                android:exported="true">
-
+                android:exported="false">
+        </activity>
+        <activity
+                android:name=".ui.kurir.DetailOrderKurirActivity"
+                android:exported="false">
         </activity>
 
         <meta-data
@@ -45,24 +53,21 @@
 
         <activity
                 android:name=".ui.kurir.KurirActivity"
-                android:exported="true"/>
+                android:exported="false"/>
         <activity
                 android:name=".ui.pelanggan.order.OrderDetailActivity"
-                android:exported="true"/>
+                android:exported="false"/>
         <activity
                 android:name=".ui.pelanggan.transaksi.TransaksiActivity"
-                android:exported="true"
-                android:theme="@style/Theme.GalonApps.NoActionBar">
+                android:exported="false">
         </activity>
         <activity
                 android:name=".ui.pelanggan.PelangganActivity"
-                android:exported="true"
-                android:label="@string/title_activity_pelanggan">
+                android:exported="false">
         </activity>
         <activity
                 android:name=".ui.main.MainActivity"
-                android:exported="true">
-
+                android:exported="false">
         </activity>
     </application>
 

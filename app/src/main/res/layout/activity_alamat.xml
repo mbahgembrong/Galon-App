@@ -32,7 +32,6 @@
                 android:layout_height="wrap_content" android:textStyle="bold" android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
         <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inpDesaPelanggan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -43,7 +42,7 @@
             <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType=""/>
+                    android:inputType="" android:id="@+id/inpDesaPelanggan"/>
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
                 android:text="Alamat"
@@ -51,6 +50,18 @@
                 android:layout_height="wrap_content" android:textStyle="bold" android:textSize="16sp"
                 android:id="@+id/textView10"
                 android:layout_marginTop="16dp"/>
+        <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:orientation="horizontal" android:id="@+id/radioGroupAamat">
+            <RadioButton
+                    android:text="Tetap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/radioButton3" android:layout_weight="1"/>
+            <RadioButton
+                    android:text="Berubah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/radioButton4" android:layout_weight="1"/>
+        </RadioGroup>
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

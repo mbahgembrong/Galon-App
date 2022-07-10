@@ -4,20 +4,40 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.galonapps.App
-import com.example.galonapps.model.CartItem
-import com.example.galonapps.model.DetailTransaksi
-import com.example.galonapps.model.Transaksi
+import com.example.galonapps.model.*
+import com.example.galonapps.network.ApiConfig
+import com.example.galonapps.network.service.AuthService
+import com.example.galonapps.network.service.DesaService
+import com.example.galonapps.network.service.TransaksiService
 import com.example.galonapps.prefs
+import com.mapbox.geojson.Point
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
 import java.util.UUID
 
-class TransaksiViewModel:ViewModel() {
+class TransaksiViewModel : ViewModel() {
     private var cartDataList = MutableLiveData<List<CartItem>>()
-    val getCartDataList:LiveData<List<CartItem>>
+    val getCartDataList: LiveData<List<CartItem>>
         get() = cartDataList
     private var grandTotal = MutableLiveData<Int>()
-    val getGrandTotal:LiveData<Int>
+    val getHargaTotal: LiveData<Int>
         get() = grandTotal
-    fun getCart(){
+    private val _listDesa = MutableLiveData<List<Desa>>()
+    val getListDesa: LiveData<List<Desa>>
+        get() = _listDesa
+    private val _isUpdated = MutableLiveData<Int>()
+    val isUpdated: LiveData<Int>
+        get() = _isUpdated
+    private val _transaksi = MutableLiveData<Transaksi>()
+    val getTransaksi: LiveData<Transaksi>
+        get() = _transaksi
+    private val _isUpdateTransaksi = MutableLiveData<Boolean>()
+    val isUpdateTransaksi: LiveData<Boolean>
+        get() = _isUpdateTransaksi
+
+    fun getCart() {
         cartDataList.value = if (prefs.getCart().isNullOrEmpty())
             mutableListOf()
         else
@@ -40,7 +60,7 @@ class TransaksiViewModel:ViewModel() {
         }
         prefs.saveCart(cart)
         getCart()
-        getGrandTotal()
+        getHargaTotal()
     }
 
     fun subQuantity(cartItem: CartItem) {
@@ -56,32 +76,151 @@ class TransaksiViewModel:ViewModel() {
         }
         prefs.saveCart(cart)
         getCart()
-        getGrandTotal()
+        getHargaTotal()
     }
-    fun getGrandTotal(){
+
+    fun getHargaTotal() {
         var total = 0
         val cart = prefs.getCart() as MutableList<CartItem>
-        for (item in cart){
+        for (item in cart) {
             total += item.total
         }
         grandTotal.value = total
     }
 
-    fun addTransaksi() {
-        val detailTransaksi= mutableListOf<DetailTransaksi>()
-        cartDataList.value!!.forEach {
-            detailTransaksi.add(DetailTransaksi(UUID.randomUUID().toString(),null,it.galon.id, it.quantity, it.total,it.galon))
-        }
-        App.TransaksiDataList.add(Transaksi(UUID.randomUUID().toString(), null,null, null,null, grandTotal.value!!,1, null, detailTransaksi,null))
-        prefs.clearCartPreferences()
+    fun addTransaksi(transaksiRequest: TransaksiRequest) {
+        val retroInstance = ApiConfig.getRetroInstance().create(TransaksiService::class.java)
+        val call = retroInstance.createPelanggan(transaksiRequest)
+        call.enqueue(object : Callback<ResponseData<Transaksi>> {
+            override fun onResponse(
+                call: Call<ResponseData<Transaksi>>,
+                response: Response<ResponseData<Transaksi>>
+            ) {
+                if (response.isSuccessful)
+                    if (response.body()?.status == true) {
+                        prefs.clearCartPreferences()
+                        _transaksi.value = response.body()?.data
+                    } else {
+                        _transaksi.value = null
+                    }
+                else {
+                    _transaksi.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseData<Transaksi>>, t: Throwable) {
+                Timber.e(t.message)
+                _transaksi.value = null
+            }
+
+        })
     }
 
-    fun bayar() {
-        val detailTransaksi= mutableListOf<DetailTransaksi>()
-        cartDataList.value!!.forEach {
-            detailTransaksi.add(DetailTransaksi(UUID.randomUUID().toString(),null,it.galon.id, it.quantity, it.total, it.galon))
-        }
-        App.TransaksiDataList.add(Transaksi(UUID.randomUUID().toString(), null,null, null,null, grandTotal.value!!,0, null, detailTransaksi,null))
-        prefs.clearCartPreferences()
+    fun bayar(transaksiRequest: TransaksiRequest) {
+        val retroInstance = ApiConfig.getRetroInstance().create(TransaksiService::class.java)
+        val call = retroInstance.updatePelanggan(
+            TransaksiRequest(
+                transaksiRequest.id,
+                prefs.idPelanggan,
+                null,
+                null,
+                transaksiRequest.fileImage,
+                transaksiRequest.statusTransaksi ?: 0,
+            )
+        )
+        call.enqueue(object : Callback<ResponseData<Transaksi?>?> {
+            override fun onResponse(
+                call: Call<ResponseData<Transaksi?>?>,
+                response: Response<ResponseData<Transaksi?>?>
+            ) {
+                if (response.isSuccessful)
+                    _isUpdateTransaksi.value = response.body()?.status == true
+                else {
+                    _isUpdateTransaksi.value = false
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseData<Transaksi?>?>, t: Throwable) {
+                Timber.e(t.message)
+                _isUpdateTransaksi.value = false
+            }
+
+        })
+    }
+
+    fun updateAlamat(desa: String, alamat: String, point: Point) {
+        val retroInstance = ApiConfig.getRetroInstance().create(AuthService::class.java)
+        val call = retroInstance.update(
+            prefs.idUser!!,
+            prefs.nama!!,
+            prefs.tempatLahir!!,
+            prefs.tanggalLahir!!,
+            prefs.jenisKelamin!!,
+            alamat,
+            desa,
+            point.latitude(),
+            point.longitude(),
+            null,
+            null
+        )
+        call.enqueue(object : Callback<ResponseData<List<User>>?> {
+            override fun onResponse(
+                call: Call<ResponseData<List<User>>?>,
+                response: Response<ResponseData<List<User>>?>
+            ) {
+                Timber.d("onResponse: ${response.body()}")
+                if (response.isSuccessful)
+                    if (response.body()?.status == true) {
+                        _isUpdated.value = 200
+                        response.body()?.data?.first().let {
+                            prefs.alamat = it?.alamat
+                            prefs.saveDesa(it?.desa!!)
+                            prefs.langUser = it?.lang!!.toString()
+                            prefs.longUser = it?.long!!.toString()
+                        }
+                        Timber.d("message 1: ${response.body()}")
+                    } else {
+                        _isUpdated.value = 205
+                        Timber.d("message 2: ${response}")
+                    }
+                else {
+                    Timber.d("message 3: ${response}")
+                    Timber.d("message 3: ${call}")
+                    _isUpdated.value = 500
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseData<List<User>>?>, t: Throwable) {
+                Timber.d("message 4: ${t.message}")
+                _isUpdated.value = 404
+            }
+
+        })
+    }
+
+    fun getDesa() {
+        val retroInstance = ApiConfig.getRetroInstance().create(DesaService::class.java)
+        val call = retroInstance.desa()
+        call.enqueue(object : Callback<ResponseData<List<Desa>>> {
+            override fun onResponse(
+                call: Call<ResponseData<List<Desa>>>,
+                response: Response<ResponseData<List<Desa>>>
+            ) {
+                if (response.isSuccessful)
+                    if (response.body()?.status == true) {
+                        _listDesa.value = response.body()?.data
+                    } else {
+                        _listDesa.value = null
+                    }
+                else {
+                    _listDesa.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseData<List<Desa>>>, t: Throwable) {
+                _listDesa.value = null
+            }
+
+        })
     }
 }
