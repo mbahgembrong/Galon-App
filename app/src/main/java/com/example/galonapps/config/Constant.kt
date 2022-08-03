@@ -1,7 +1,7 @@
 package com.example.galonapps.config
 
 object Constant {
-    const val BASE_URL = "http://192.168.22.3/"
+    const val BASE_URL = "http://192.168.1.16/"
     const val GALON_URL = "${BASE_URL}img_galon/"
 
     const val KETERANGAN_PEMBAYARAN = "Bayar Orderanmu ke rekening kami \n Bank Mandiri"

@@ -12,7 +12,7 @@
         <entry key="..\:/Galon App/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.1285140562248996" />
         <entry key="..\:/Galon App/app/src/main/res/layout-w936dp/activity_login.xml" value="0.16" />
         <entry key="..\:/Galon App/app/src/main/res/layout/activity_alamat.xml" value="0.25" />
-        <entry key="..\:/Galon App/app/src/main/res/layout/activity_bayar.xml" value="0.25" />
+        <entry key="..\:/Galon App/app/src/main/res/layout/activity_bayar.xml" value="0.1245136186770428" />
         <entry key="..\:/Galon App/app/src/main/res/layout/activity_kurir.xml" value="0.25" />
         <entry key="..\:/Galon App/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Galon App/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -42,6 +42,11 @@
         <entry key="..\:/Galon App/app/src/main/res/menu/menu_transaksi.xml" value="0.33" />
         <entry key="..\:/Galon App/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21614583333333334" />
         <entry key="..\:/Galon App/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.21614583333333334" />
+        <entry key="..\:/Informatika/_Project/_Order/Kotlin/Galon App/app/src/main/res/layout/activity_bayar.xml" value="0.151268115942029" />
+        <entry key="..\:/Informatika/_Project/_Order/Kotlin/Galon App/app/src/main/res/layout/activity_laporan.xml" value="0.25" />
+        <entry key="..\:/Informatika/_Project/_Order/Kotlin/Galon App/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Informatika/_Project/_Order/Kotlin/Galon App/app/src/main/res/layout/activity_order_detail.xml" value="0.22" />
+        <entry key="..\:/Informatika/_Project/_Order/Kotlin/Galon App/app/src/main/res/layout/fragment_order.xml" value="0.33" />
       </map>
     </option>
   </component>

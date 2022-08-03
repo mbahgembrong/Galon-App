@@ -67,6 +67,11 @@
                 android:text="Login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/buttonLogin" android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="0dp"/>
+        <Button
+                android:text="Register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/buttonRegister" android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp" android:backgroundTint="#FF5722"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

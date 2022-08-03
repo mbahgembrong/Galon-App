@@ -34,7 +34,7 @@ class HomeViewModel : ViewModel() {
             ) {
                 if (response.isSuccessful)
                     if (response.body()?.status == true) {
-                        galonDataList.value = response.body()?.data
+                        galonDataList.value = response.body()?.data?.filter { it.stok != 0 }
                     } else {
                         galonDataList.value = null
                     }

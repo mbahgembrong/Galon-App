@@ -26,7 +26,7 @@ class OrderViewModel : ViewModel() {
     val isUpdateTransaksi: LiveData<Boolean>
         get() = _isUpdateTransaksi
 
-    fun getOrder() {
+    fun getOrder(statusSelected: String? = null) {
         val retroInstance = ApiConfig.getRetroInstance().create(TransaksiService::class.java)
         val call = retroInstance.indexPelanggan(prefs?.idPelanggan!!)
         call.enqueue(object : Callback<ResponseData<List<Transaksi>>> {
@@ -38,7 +38,12 @@ class OrderViewModel : ViewModel() {
                 if (response.isSuccessful)
                     if (response.body()?.status == true) {
                         Timber.d("message 1")
-                        orderDataList.value = response.body()?.data
+                        if (statusSelected == null) {
+                            orderDataList.value = response.body()?.data
+                        } else {
+                            orderDataList.value =
+                                response.body()?.data?.filter { it.status == statusToInt(statusSelected) }
+                        }
                     } else {
                         Timber.d("message 2")
                         orderDataList.value = null
@@ -87,6 +92,18 @@ class OrderViewModel : ViewModel() {
             }
 
         })
+    }
+
+    private fun statusToInt(status: String): Int {
+        return when (status) {
+            "belum dikonfirmasi" -> 0
+            "belum dibayar" -> 1
+            "pembayaran gagal" -> 2
+            "belum dikirim" -> 3
+            "selesai" -> 4
+            "dibatalkan" -> 5
+            else -> 0
+        }
     }
 
     fun bayarOrder(id: String): Boolean {

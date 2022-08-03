@@ -28,7 +28,7 @@ class KurirViewModel : ViewModel() {
     val isComplete: LiveData<Boolean>
         get() = _isComplete
 
-    fun getOrderKurir() {
+    fun getOrderKurir(status: Int = 3) {
         val retroInstance = ApiConfig.getRetroInstance().create(TransaksiService::class.java)
         val call = retroInstance.indexKurir(prefs.idPelanggan!!)
         call.enqueue(object : Callback<ResponseData<List<Transaksi>>> {
@@ -40,7 +40,7 @@ class KurirViewModel : ViewModel() {
                 if (response.isSuccessful)
                     if (response.body()?.status == true) {
                         _orderKurirList.value = response.body()?.data?.filter {
-                            it.status == 3
+                            it.status == status
                         }
                     } else {
                         _orderKurirList.value = null

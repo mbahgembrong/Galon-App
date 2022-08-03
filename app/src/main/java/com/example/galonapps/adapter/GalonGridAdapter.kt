@@ -41,7 +41,7 @@ class GalonGridAdapter(
             Picasso.get().load("${Constant.GALON_URL}${galon.image}").placeholder(R.drawable.ic_water)
                 .into(binding.imageGridGalon)
             binding.textMerekGrid.text = galon.merk
-            binding.textIsiGrid.text = galon.isiGalon
+            binding.textIsiGrid.text = galon.stok.toString()
             binding.textHargaGrid.text = App.currencyFormat(galon.hargaJual)
             if (Cart.showItem(galon) != null) {
                 binding.buttonTambahGrid.visibility = View.GONE

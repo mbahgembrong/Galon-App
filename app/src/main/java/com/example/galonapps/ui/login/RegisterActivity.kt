@@ -166,10 +166,10 @@ class RegisterActivity : AppCompatActivity() {
     private fun initView() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val username = intent.getStringExtra("username")
-        val password = intent.getStringExtra("password")
-        binding.inputTextUsername.setText(username)
-        binding.inputTextPassword2.setText(password)
+//        val username = intent.getStringExtra("username")
+//        val password = intent.getStringExtra("password")
+//        binding.inputTextUsername.setText(username)
+//        binding.inputTextPassword2.setText(password)
 
         val datePicker = MaterialDatePicker.Builder.datePicker().build()
         binding.buttonTanggalLahir.setOnClickListener {
@@ -183,6 +183,12 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent).also { finish() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

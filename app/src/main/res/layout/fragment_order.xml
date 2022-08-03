@@ -18,10 +18,19 @@
                 android:layout_height="wrap_content" android:id="@+id/textView5" android:textColor="@color/white"
                 android:textSize="20sp" android:textStyle="bold"/>
     </LinearLayout>
+    <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/spinerStatus"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout11" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@+id/rvOrder"
+            android:padding="8dp" android:minHeight="48dp"
+    />
     <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="0dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" tools:listitem="@layout/list_galon_order"
-            android:id="@+id/rvOrder" app:layout_constraintTop_toBottomOf="@+id/linearLayout11"/>
+            android:id="@+id/rvOrder" app:layout_constraintTop_toBottomOf="@+id/spinerStatus"
+            app:layout_constraintHorizontal_bias="0.5"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

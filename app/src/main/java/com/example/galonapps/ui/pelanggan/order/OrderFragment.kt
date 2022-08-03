@@ -1,10 +1,15 @@
 package com.example.galonapps.ui.pelanggan.order
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -25,6 +30,17 @@ class OrderFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    val status = arrayOf(
+        "All",
+        "belum konfirmasi",
+        "belum dibayar",
+        "pembayaran gagal",
+        "belum dikirim",
+        "selesai",
+        "dibatalkan"
+    )
+    var statusSelected = "All"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,7 +50,6 @@ class OrderFragment : Fragment() {
         val root: View = binding.root
         initView()
         setObservers()
-
         return root
     }
 
@@ -44,6 +59,30 @@ class OrderFragment : Fragment() {
     }
 
     fun initView() {
+        val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, status)
+        (binding.spinerStatus).apply {
+            setAdapter(adapter)
+        }
+        binding.spinerStatus.onItemSelectedListener = object :
+            android.widget.AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                statusSelected = "All"
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                statusSelected = status[position]
+                if (statusSelected == "All") {
+                    orderViewModel.getOrder()
+                } else {
+                    orderViewModel.getOrder(statusSelected)
+                }
+            }
+        }
         setupRecyclerView()
     }
 

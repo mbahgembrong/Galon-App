@@ -29,6 +29,11 @@ class LoginActivity : AppCompatActivity() {
                 binding.inputTextPasswordLogin.text.toString()
             )
         }
+        binding.buttonRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun onResume() {
@@ -63,23 +68,23 @@ class LoginActivity : AppCompatActivity() {
                 }
                 500 -> {
                     toast(
-                        "Belum Punya Akun",
+                        "Anda Belum Terdaftar",
                         MotionToast.TOAST_INFO,
                     )
-                    AlertDialog.Builder(this)
-                        .setTitle("Akun anda belum register")
-                        .setMessage("Apakah anda mau registrasi ?")
-                        .setPositiveButton("OK") { dialog, which ->
-                            val intent = Intent(this, RegisterActivity::class.java)
-                            intent.putExtra("username", binding.inputTextUsernameLogin.text.toString())
-                            intent.putExtra("password", binding.inputTextPasswordLogin.text.toString())
-                            startActivity(intent)
-                            finish()
-                        }
-                        .setNegativeButton("Cancel") { dialog, which ->
-                            dialog.dismiss()
-                        }
-                        .show()
+//                    AlertDialog.Builder(this)
+//                        .setTitle("Akun anda belum register")
+//                        .setMessage("Apakah anda mau registrasi ?")
+//                        .setPositiveButton("OK") { dialog, which ->
+//                            val intent = Intent(this, RegisterActivity::class.java)
+//                            intent.putExtra("username", binding.inputTextUsernameLogin.text.toString())
+//                            intent.putExtra("password", binding.inputTextPasswordLogin.text.toString())
+//                            startActivity(intent)
+//                            finish()
+//                        }
+//                        .setNegativeButton("Cancel") { dialog, which ->
+//                            dialog.dismiss()
+//                        }
+//                        .show()
                 }
                 404 -> {
                     toast(

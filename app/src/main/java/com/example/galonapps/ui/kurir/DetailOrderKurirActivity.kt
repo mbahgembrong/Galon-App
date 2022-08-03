@@ -55,6 +55,8 @@ class DetailOrderKurirActivity : AppCompatActivity() {
         binding.buttonCancelOrderDetail.visibility = android.view.View.VISIBLE
         binding.buttonBayarOrderDetail.visibility = android.view.View.GONE
         binding.layoutStatus.setBackgroundColor(statusColor(transaksi.status))
+        if (transaksi.status != 3)
+            binding.buttonCancelOrderDetail.visibility = android.view.View.GONE
         if (transaksi.ongkir != null) {
             binding.layoutOngkir.visibility = android.view.View.VISIBLE
             binding.textOngkirOrderDetail.text = App.currencyFormat(transaksi.ongkir)
