@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Desa(
-    @SerializedName("id") val id: String,
-    @SerializedName("nama_desa") val nama: String,
-    @SerializedName("ongkir") val ongkir: Int,
+    @SerializedName("id") var id: String,
+    @SerializedName("nama_desa") var nama: String,
+    @SerializedName("ongkir") var ongkir: Int,
 ) : Parcelable

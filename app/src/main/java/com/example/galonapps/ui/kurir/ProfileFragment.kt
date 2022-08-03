@@ -1,27 +1,27 @@
-package com.example.galonapps.ui.pelanggan.profile
+package com.example.galonapps.ui.kurir
 
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.galonapps.App
 import com.example.galonapps.databinding.FragmentProfileBinding
 import com.example.galonapps.model.Desa
 import com.example.galonapps.model.User
 import com.example.galonapps.prefs
+import com.example.galonapps.ui.pelanggan.profile.ProfileViewModel
+import com.example.galonapps.ui.pelanggan.transaksi.TransaksiViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.mapbox.geojson.Point
 import mumayank.com.airlocationlibrary.AirLocation
+import timber.log.Timber
 import www.sanju.motiontoast.MotionToast
 import java.sql.Date
 import java.text.SimpleDateFormat
@@ -33,8 +33,6 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: ProfileViewModel
     lateinit var userLocation: Point
-    var listDesa = java.util.ArrayList<Desa>()
-    lateinit var desaClicked: Desa
     var newAddress: String? = null
     var alamatBaru: String? = null
     var newPoint: Point? = null
@@ -65,11 +63,11 @@ class ProfileFragment : Fragment() {
                         dateData,
                         jenisKelamin,
                         alamatBaru ?: prefs.alamat!!,
-                        if (newPoint != null) newPoint!!.latitude() else prefs.langUser!!.toDouble(),
-                        if (newPoint != null) newPoint!!.longitude() else prefs.longUser!!.toDouble(),
+                        null,
+                        null,
                         if (!binding.inputTextPassword3.text.isNullOrEmpty()) binding.inputTextPassword3.text.toString() else null,
                         if (!binding.inputTextUsername3.text.isNullOrEmpty()) binding.inputTextUsername3.text.toString() else null,
-                        desaClicked,
+                        Desa("0", "aaa", 11),
                         null,
                         null,
                         prefs.token
@@ -102,8 +100,10 @@ class ProfileFragment : Fragment() {
                 jenisKelamin = "L"
             }
         }
-        binding.inputTextDesa3.setText(prefs.getDesa()?.nama)
-        desaClicked = prefs.getDesa()!!
+        binding.apply {
+            textView30.visibility = View.GONE
+            inputTextDesa3.visibility = View.GONE
+        }
         binding.inputTextAlamat3.setText(prefs.alamat)
         binding.radioGroupAamat.setOnCheckedChangeListener { radioGroup, i ->
             var radioButton = radioGroup.findViewById<RadioButton>(radioGroup.getCheckedRadioButtonId())
@@ -155,28 +155,6 @@ class ProfileFragment : Fragment() {
 
     private fun observer() {
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        viewModel.getListDesa.observe(this, Observer {
-            it.let { it1 -> listDesa.addAll(it1) }
-            val desas = ArrayList<String>()
-            for (i in listDesa) {
-                desas.add(i.nama)
-            }
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, desas)
-            binding.inputTextDesa3.apply {
-                setAdapter(adapter)
-                setOnTouchListener { view, motionEvent ->
-                    if (motionEvent.action == MotionEvent.ACTION_UP) {
-                        this.showDropDown()
-                    }
-                    false
-                }
-            }
-
-            binding.inputTextDesa3.setOnItemClickListener { parent, view, position, id ->
-                desaClicked = listDesa[position]
-            }
-        })
-        viewModel.getDesa()
         viewModel.getUser.observe(this) {
             if (it != null)
                 toast("Berhasil Merubah Data", MotionToast.TOAST_SUCCESS)

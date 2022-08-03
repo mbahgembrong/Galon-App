@@ -1,7 +1,6 @@
 package com.example.galonapps.ui.login
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
@@ -9,10 +8,8 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.appcompat.R
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
@@ -20,10 +17,6 @@ import com.example.galonapps.databinding.ActivityRegisterBinding
 import com.example.galonapps.model.Desa
 import com.example.galonapps.model.User
 import com.example.galonapps.ui.pelanggan.PelangganActivity
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.datepicker.MaterialDatePicker
 import mumayank.com.airlocationlibrary.AirLocation
 import timber.log.Timber
