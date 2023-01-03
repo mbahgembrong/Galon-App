@@ -10,4 +10,5 @@ data class Desa(
     @SerializedName("id") var id: String,
     @SerializedName("nama_desa") var nama: String,
     @SerializedName("ongkir") var ongkir: Int,
+    @SerializedName("kode_pos") var kodePos: String?,
 ) : Parcelable

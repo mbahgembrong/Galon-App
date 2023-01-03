@@ -52,6 +52,7 @@ class AlamatActivity : AppCompatActivity(), OnMapClickListener {
     var newAddress: String? = null
     var alamatBaru: String? = null
     var newPoint: Point? = null
+    var postCode: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         desaClicked = prefs.getDesa()!!
@@ -74,25 +75,6 @@ class AlamatActivity : AppCompatActivity(), OnMapClickListener {
         viewModel = ViewModelProvider(this).get(TransaksiViewModel::class.java)
         viewModel.getListDesa.observe(this, androidx.lifecycle.Observer {
             it.let { it1 -> listDesa.addAll(it1) }
-            val desas = ArrayList<String>()
-            for (i in listDesa) {
-                desas.add(i.nama)
-            }
-            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, desas)
-            (binding.inpDesaPelanggan as? AutoCompleteTextView)?.apply {
-                setAdapter(adapter)
-//                setSelection(listDesa.indexOf(desaClicked))
-                setOnTouchListener { view, motionEvent ->
-                    if (motionEvent.action == MotionEvent.ACTION_UP) {
-                        this.showDropDown()
-                    }
-                    false
-                }
-            }
-            (binding.inpDesaPelanggan as? AutoCompleteTextView)?.setOnItemClickListener { parent, view, position, id ->
-                desaClicked = listDesa[position]
-//                binding.inpDesaPelanggan.setText(desaClicked?.nama)
-            }
         })
         viewModel.getDesa()
         viewModel.isUpdated.observe(this, androidx.lifecycle.Observer {
@@ -101,24 +83,28 @@ class AlamatActivity : AppCompatActivity(), OnMapClickListener {
                     toast("Berhasil Update", MotionToast.TOAST_SUCCESS)
                     onBackPressed()
                 }
+
                 205 -> {
                     toast(
                         "Ada data yang kosong",
                         MotionToast.TOAST_WARNING,
                     )
                 }
+
                 500 -> {
 //                    toast(
 //                        "Akun sudah terdaftar, tolong ganti nama akun",
 //                        MotionToast.TOAST_INFO,
 //                    )
                 }
+
                 404 -> {
                     toast(
                         "Periksa koneksi anda",
                         MotionToast.TOAST_NO_INTERNET,
                     )
                 }
+
                 else -> {
                     toast(
                         "Register Failed",
@@ -133,16 +119,22 @@ class AlamatActivity : AppCompatActivity(), OnMapClickListener {
         binding = ActivityAlamatBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.inputTextAlamat.setText(prefs?.alamat)
+        binding.textDesaPelanggan.setText(prefs.getDesa()?.nama)
+
         binding.radioGroupAamat.setOnCheckedChangeListener { radioGroup, i ->
             var radioButton = radioGroup.findViewById<RadioButton>(radioGroup.getCheckedRadioButtonId())
             if (radioButton.text == "Tetap") {
                 binding.inputTextAlamat.setText(prefs?.alamat)
+                binding.textDesaPelanggan.setText(prefs.getDesa()?.nama)
                 alamatBaru = null
                 newPoint = null
+                desaClicked = prefs.getDesa()!!
             } else {
                 newPoint = userLocation
                 alamatBaru = newAddress
                 binding.inputTextAlamat.setText(newAddress)
+                desaClicked = listDesa.find { it.kodePos == postCode }!!
+                binding.textDesaPelanggan.setText(desaClicked.nama)
             }
         }
         binding.radioButton3.isChecked = true
@@ -176,6 +168,8 @@ class AlamatActivity : AppCompatActivity(), OnMapClickListener {
         userLocation = it
         val geocoder = Geocoder(applicationContext, Locale.getDefault())
         var addresses = geocoder.getFromLocation(userLocation.latitude(), userLocation.longitude(), 1)
+        Timber.d("postal-code ${addresses[0].postalCode}")
+        postCode = addresses[0].postalCode
         newAddress = addresses[0].getAddressLine(0)
     }
 

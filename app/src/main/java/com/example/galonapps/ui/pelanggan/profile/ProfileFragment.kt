@@ -41,6 +41,7 @@ class ProfileFragment : Fragment() {
     var dateData: String = ""
     var jenisKelamin: String = ""
     var airLoc: AirLocation? = null
+    var postCode: String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -102,13 +103,15 @@ class ProfileFragment : Fragment() {
                 jenisKelamin = "L"
             }
         }
-        binding.inputTextDesa3.setText(prefs.getDesa()?.nama)
         desaClicked = prefs.getDesa()!!
+        binding.textDesa.setText(prefs.getDesa()?.nama)
         binding.inputTextAlamat3.setText(prefs.alamat)
         binding.radioGroupAamat.setOnCheckedChangeListener { radioGroup, i ->
             var radioButton = radioGroup.findViewById<RadioButton>(radioGroup.getCheckedRadioButtonId())
             if (radioButton.text == "Tetap") {
                 binding.inputTextAlamat3.setText(prefs?.alamat)
+                binding.textDesa.setText(prefs.getDesa()?.nama)
+                desaClicked = prefs.getDesa()!!
                 alamatBaru = null
                 newPoint = null
             } else {
@@ -116,6 +119,8 @@ class ProfileFragment : Fragment() {
                 newPoint = userLocation
                 alamatBaru = newAddress
                 binding.inputTextAlamat3.setText(newAddress)
+                desaClicked = listDesa.find { it.kodePos == postCode }!!
+                binding.textDesa.setText(desaClicked.nama)
             }
         }
         getLocation()
@@ -149,35 +154,18 @@ class ProfileFragment : Fragment() {
                     val geocoder = Geocoder(requireContext(), Locale.getDefault())
                     var addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                     newAddress = addresses[0].getAddressLine(0)
+                    postCode = addresses[0].postalCode
                 }
             })
     }
 
     private fun observer() {
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        viewModel.getListDesa.observe(this, Observer {
+        viewModel.getListDesa.observe(viewLifecycleOwner, Observer {
             it.let { it1 -> listDesa.addAll(it1) }
-            val desas = ArrayList<String>()
-            for (i in listDesa) {
-                desas.add(i.nama)
-            }
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, desas)
-            binding.inputTextDesa3.apply {
-                setAdapter(adapter)
-                setOnTouchListener { view, motionEvent ->
-                    if (motionEvent.action == MotionEvent.ACTION_UP) {
-                        this.showDropDown()
-                    }
-                    false
-                }
-            }
-
-            binding.inputTextDesa3.setOnItemClickListener { parent, view, position, id ->
-                desaClicked = listDesa[position]
-            }
         })
         viewModel.getDesa()
-        viewModel.getUser.observe(this) {
+        viewModel.getUser.observe(viewLifecycleOwner) {
             if (it != null)
                 toast("Berhasil Merubah Data", MotionToast.TOAST_SUCCESS)
             else

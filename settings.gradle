@@ -6,16 +6,20 @@ dependencyResolutionManagement {
         jcenter() // Warning: this repository is going to shut down soon
         maven {
             url "https://jitpack.io"
-            allowInsecureProtocol(true)
+            allowInsecureProtocol true
         }
         maven {
             url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            allowInsecureProtocol true
             authentication {
                 basic(BasicAuthentication)
             }
             credentials {
+                // Do not change the username below.
+                // This should always be `mapbox` (not your username).
                 username = "mapbox"
-                password = 'sk.eyJ1IjoibWJhaGdlbWJyb25nIiwiYSI6ImNsNGVxN2JhazAyejIzY21uamtkMDVueWkifQ.7wopgH0VaOVjVZ7FJk4jpA'
+                // Use the secret token you stored in gradle.properties as the password
+                password = MAPBOX_DOWNLOADS_TOKEN
             }
         }
     }

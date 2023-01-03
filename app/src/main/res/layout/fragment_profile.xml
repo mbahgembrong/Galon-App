@@ -125,10 +125,12 @@
                     android:layout_height="wrap_content" android:textStyle="bold" android:textSize="16sp"
                     android:id="@+id/textView30"
                     android:layout_marginTop="16dp"/>
-            <AutoCompleteTextView
+            <TextView
+                    android:text="Desa"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/inputTextDesa3"
-                    android:minHeight="48dp" android:hint="Masukkan Desa"/>
+                    android:layout_height="wrap_content" android:textSize="16sp"
+                    android:id="@+id/textDesa"
+                    android:layout_marginTop="16dp" android:textStyle="bold"/>
             <TextView
                     android:text="Alamat"
                     android:layout_width="match_parent"

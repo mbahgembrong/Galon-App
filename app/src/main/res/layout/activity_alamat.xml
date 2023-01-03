@@ -31,19 +31,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:textStyle="bold" android:textSize="16sp"
                 android:layout_marginTop="16dp"/>
-        <com.google.android.material.textfield.TextInputLayout
+        <TextView
+                android:text="TextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:hint="Desa"
-                android:padding="16dp"
-                android:visibility="visible">
-
-            <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="" android:id="@+id/inpDesaPelanggan"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content" android:id="@+id/textDesaPelanggan" android:padding="16dp"
+                style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"/>
         <TextView
                 android:text="Alamat"
                 android:layout_width="match_parent"

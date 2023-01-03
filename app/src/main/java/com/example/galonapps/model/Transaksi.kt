@@ -19,6 +19,10 @@ data class Transaksi(
     @SerializedName("keterangan") var keterangan: String?,
     @SerializedName("detail_transaksi") var detailTransaksi: List<DetailTransaksi>,
     @SerializedName("bukti_transaksi") var buktiTransaksi: String?,
+    @SerializedName("alamat") var alamat: String?,
+    @SerializedName("lang") var lang: String?,
+    @SerializedName("long") var long: String?,
+    @SerializedName("desa") var desa: Desa?,
     @SerializedName("created_at") var createdAt: String?,
     var jarak: Double?,
 ) : Parcelable

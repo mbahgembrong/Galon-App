@@ -67,7 +67,7 @@ class ProfileFragment : Fragment() {
                         null,
                         if (!binding.inputTextPassword3.text.isNullOrEmpty()) binding.inputTextPassword3.text.toString() else null,
                         if (!binding.inputTextUsername3.text.isNullOrEmpty()) binding.inputTextUsername3.text.toString() else null,
-                        Desa("0", "aaa", 11),
+                        Desa("0", "aaa", 11, "64444"),
                         null,
                         null,
                         prefs.token
@@ -102,7 +102,6 @@ class ProfileFragment : Fragment() {
         }
         binding.apply {
             textView30.visibility = View.GONE
-            inputTextDesa3.visibility = View.GONE
         }
         binding.inputTextAlamat3.setText(prefs.alamat)
         binding.radioGroupAamat.setOnCheckedChangeListener { radioGroup, i ->
@@ -155,7 +154,7 @@ class ProfileFragment : Fragment() {
 
     private fun observer() {
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        viewModel.getUser.observe(this) {
+        viewModel.getUser.observe(viewLifecycleOwner) {
             if (it != null)
                 toast("Berhasil Merubah Data", MotionToast.TOAST_SUCCESS)
             else
