@@ -58,7 +58,7 @@ class OrderDetailActivity : AppCompatActivity() {
         binding.textKaryawanOrderDetail.text = "Karyawan : ${transaksi.karyawan?.nama ?: "-"}"
         binding.textKurirOrderDetail.text = "Kurir : ${transaksi.kurir?.nama ?: "-"}"
         binding.textNamaPelangganOrderDetail.text = "Pelanggan : ${transaksi.pelanggan?.nama ?: "-"}"
-        binding.textAlamatOrderDetailPelanggan.text = " ${prefs.alamat ?: "-"}"
+        binding.textAlamatOrderDetailPelanggan.text = " ${transaksi.alamat ?: "-"}"
         binding.textGrandTotalOrderDetail.text = App.currencyFormat(transaksi.total)
         binding.textTanggalPemesananOrderDetail.text = "Tanggal : ${transaksi.createdAt ?: "-"}"
         if (transaksi.status == 1 || transaksi.status == 2 || transaksi.buktiTransaksi == null)

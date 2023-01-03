@@ -299,6 +299,7 @@ class MapsActivity : AppCompatActivity() {
             when (navigationCameraState) {
                 NavigationCameraState.TRANSITION_TO_FOLLOWING,
                 NavigationCameraState.FOLLOWING -> binding.recenter.visibility = View.INVISIBLE
+
                 NavigationCameraState.TRANSITION_TO_OVERVIEW,
                 NavigationCameraState.OVERVIEW,
                 NavigationCameraState.IDLE -> binding.recenter.visibility = View.VISIBLE
@@ -344,7 +345,11 @@ class MapsActivity : AppCompatActivity() {
 //        to create route
         binding.buttonRoute.setOnClickListener {
             val getIntent = intent.getParcelableExtra<Transaksi>(MAPS_ACTIVITY_KEY)
-            val point = Point.fromLngLat(getIntent?.pelanggan?.long ?: 0.0, getIntent?.pelanggan?.lang ?: 0.0)
+            val point = Point.fromLngLat(
+                (getIntent?.long?.toDouble() ?: 0.0) as Double, (getIntent?.lang?.toDouble()
+                    ?: 0.0) as
+                        Double
+            )
             findRoute(point)
             it.visibility = View.GONE
             binding.buttonSelesai.visibility = View.VISIBLE

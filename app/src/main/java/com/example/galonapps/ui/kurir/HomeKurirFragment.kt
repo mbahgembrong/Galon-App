@@ -71,18 +71,22 @@ class HomeKurirFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(KurirViewModel::class.java)
         viewModel.getOrderKurirList.observe(this, androidx.lifecycle.Observer {
             if (it != null) {
-                Timber.d("getOrderKurirList: $it")
+                Timber.d("getOrderKurirList: ${it.map { it.pelanggan?.lang }}")
                 orderKurirList.clear()
-                it.map { transaksi ->
-                    euclidean(
-                        transaksi.pelanggan?.lang!!.toDouble(),
-                        transaksi.pelanggan?.long!!.toDouble(),
-                        kurirPoint?.latitude()?.toDouble()!!,
-                        kurirPoint?.longitude()?.toDouble()!!
-                    ).let {
-                        transaksi.jarak = it
+                it
+                    .map { transaksi ->
+
+                        euclidean(
+                            if (transaksi.lang.isNullOrEmpty()) transaksi.pelanggan?.lang!!
+                                .toDouble() else transaksi.lang!!.toDouble(),
+                            if (transaksi.long.isNullOrEmpty()) transaksi.pelanggan?.long!!
+                                .toDouble() else transaksi.long!!.toDouble(),
+                            kurirPoint?.latitude()?.toDouble()!!,
+                            kurirPoint?.longitude()?.toDouble()!!
+                        ).let {
+                            transaksi.jarak = it
+                        }
                     }
-                }
                 orderKurirList.addAll(it.sortedBy { it.jarak })
                 orderKurirAdapter.notifyDataSetChanged()
             }

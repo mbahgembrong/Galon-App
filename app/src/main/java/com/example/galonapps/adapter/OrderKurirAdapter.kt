@@ -34,8 +34,8 @@ class OrderKurirAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(order: Transaksi, position: Int, listener: OnItemClickListener) {
             binding.textNamaUserListOrderKurir.text = order.pelanggan?.nama ?: "-"
-            binding.textDesaUserListOrderKurir.text = "Desa : ${order.pelanggan?.desa?.nama}"
-            binding.textAlamatUserListOrderKurir.text = order.pelanggan?.alamat
+            binding.textDesaUserListOrderKurir.text = "Desa : ${order.desa?.nama ?: "-"}"
+            binding.textAlamatUserListOrderKurir.text = order?.alamat
             binding.textDateListOrderKurir.text = "Tanggal : ${order.createdAt}"
             binding.root.setOnClickListener { listener.onClickListener(position) }
             if (order.status != 3)
